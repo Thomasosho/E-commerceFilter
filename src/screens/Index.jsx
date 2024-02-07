@@ -16,17 +16,18 @@ function Index() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-
-    const products = prods.filter(
+  
+    const filteredProducts = prods.filter(
       (item) =>
-        item?.name == search ||
-        item?.category == search ||
-        item?.description == search ||
-        item?.price == search
+        item?.name.toLowerCase().includes(search.toLowerCase()) ||
+        item?.category.toLowerCase().includes(search.toLowerCase()) ||
+        item?.description.toLowerCase().includes(search.toLowerCase()) ||
+        item?.price.toString().includes(search)
     );
-
-    setProducts(products);
+  
+    setProducts(filteredProducts);
   }
+  
 
   return (
     <div>

@@ -1,38 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "../component/Menu";
-import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  child,
-  DataSnapshot,
-  remove,
-  update,
-} from "firebase/database";
 
 function Product() {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [product, setProduct] = useState([]);
-
-  const currentProduct = product;
-
+  const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const database = getDatabase();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    let storedProducts = [];
+
+    try {
+      storedProducts = JSON.parse(localStorage.getItem("products")) || [];
+    } catch (error) {
+      console.error("Error local storage:", error);
+    }
+
+    setProducts(storedProducts);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
 
   const generateId = () => {
-    const timestamp = Date.now().toString(36); // Unique timestamp representation
-    const randomNumber = Math.random().toString(36).substr(2, 5); // Random number
+    const timestamp = Date.now().toString(36);
+    const randomNumber = Math.random().toString(36).substr(2, 5);
     return `${timestamp}-${randomNumber}`;
   };
 
   const openModal = (product) => {
     setTitle(product.title);
+    setDescription(product.description);
     setSelectedProduct(product);
-
     setIsModalOpen(true);
   };
 
@@ -47,113 +49,77 @@ function Product() {
     );
 
     if (confirmDelete) {
-      const channelRef = ref(database, `channelStations/${product.id}`);
-      remove(channelRef)
-        .then(() => {
-          // Update the local state without fetching the data again
-          setProduct((prevProduct) =>
-            prevProduct.filter((station) => station.id !== product.id)
-          );
-        })
-        .catch((error) => {
-          console.error("Error deleting product:", error);
-        });
+      const updatedProducts = products.filter((p) => p.id !== product.id);
+      setProducts(updatedProducts);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const id = selectedProduct ? selectedProduct.id : generateId();
-
-      // Editing an existing category
-      const productRef = ref(database, `products/${id}`);
-
-
       const updatedData = {
         id,
         title,
-        slug: title.toLowerCase(),
-        ...(selectedProduct
-          ? { updatedAt: new Date().toISOString() }
-          : { createdAt: new Date().toISOString() }),
+        description,
+        updatedAt: new Date().toISOString(),
       };
 
-      if (!selectedProduct) {
-        await set(productRef, updatedData);
-        setProduct((prevProduct) =>
-        prevProduct.map((product) =>
-        product.id === selectedProduct.id
-        ? { ...product, ...updatedData }
-        : product
-        )
-        );
-        setLoading(false);
-      }
-
-      const cleanData = Object.fromEntries(
-        Object.entries(updatedData).filter(
-          ([_, value]) => value !== undefined && value !== null
-        )
-      );
-
       if (selectedProduct) {
-        // If selectedProduct exists, it's an edit, so update the existing product
-        await update(productRef, cleanData);
-
-        // Update the local state without fetching the data again
-        setProduct((prevProduct) =>
-          prevProduct.map((product) =>
-            product.id === selectedProduct.id
-              ? { ...product, ...updatedData }
-              : product
-          )
+        const updatedProducts = products.map((p) =>
+          p.id === selectedProduct.id ? { ...p, ...updatedData } : p
         );
-
-        setLoading(false);
+        setProducts(updatedProducts);
       } else {
-        console.log("done");
+        const newProduct = {
+          ...updatedData,
+          createdAt: new Date().toISOString(),
+        };
+        setProducts([...products, newProduct]);
       }
+
+      setLoading(false);
+      closeModal();
     } catch (error) {
       setLoading(false);
-      console.error("Error handling form submission:", error);
+      console.error("form submission Error:", error);
     }
   };
 
   return (
     <div>
       <Menu />
-      <div className="container mt-5">
+      <div className="container mt-5 px-16">
         <button
-          className="btn btn-primary mb-3"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3"
           onClick={() => setIsModalOpen(true)}
         >
           Add New
         </button>
-        <table className="table">
+        <table className="table-auto">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className="px-4 py-2">Title</th>
+              <th className="px-4 py-2">Description</th>
+              <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
-            {currentProduct.map((product) => (
+            {products.map((product) => (
               <tr key={product.id}>
-                <td>{product?.title}</td>
-                <td>{product?.description}</td>
-                <td>
+                <td className="border px-4 py-2">{product.title}</td>
+                <td className="border px-4 py-2">{product.description}</td>
+                <td className="border px-4 py-2">
                   <button
-                    className="btn btn-warning"
+                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
                     onClick={() => openModal(product)}
                   >
                     Edit
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => handleDelete(product)}
                   >
                     Delete
@@ -165,19 +131,20 @@ function Product() {
         </table>
       </div>
       <div
-        className={`modal fade ${isModalOpen ? "show" : ""}`}
-        tabIndex="-1"
-        style={{ display: isModalOpen ? "block" : "none" }}
-        role="dialog"
+        className={`modal ${
+          isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        } fixed w-full h-full top-0 left-0 flex items-center justify-center transition-opacity duration-300 ease-in-out`}
         id="exampleModalScrollable"
+        role="dialog"
         aria-labelledby="exampleModalScrollableTitle"
-        aria-hidden="true"
+        aria-hidden={!isModalOpen}
       >
-        <div className="modal-dialog modal-dialog-scrollable">
-          <div className="modal-content">
+        <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+          <div className="modal-content py-4 text-left px-6">
             <div className="modal-header">
-              <h5 className="modal-title">
-                {selectedProduct ? "Edit Station" : "Add New Station"}
+              <h5 className="modal-title text-xl font-bold">
+                {selectedProduct ? "Edit Product" : "Add New Product"}
               </h5>
               <button
                 type="button"
@@ -193,29 +160,40 @@ function Product() {
             >
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label">Title</label>
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Title
+                  </label>
                   <input
                     type="text"
                     value={title}
-                    className="form-control"
+                    className="w-full border border-gray-300 p-2"
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Description</label>
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Description
+                  </label>
                   <input
                     type="text"
                     value={description}
-                    className="form-control"
+                    className="w-full border border-gray-300 p-2"
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
                 {loading ? (
-                  <button type="submit" className="btn btn-dark" disabled>
+                  <button
+                    type="submit"
+                    className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                    disabled
+                  >
                     {selectedProduct ? "Updating..." : "Creating..."}
                   </button>
                 ) : (
-                  <button type="submit" className="btn btn-dark">
+                  <button
+                    type="submit"
+                    className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
+                  >
                     {selectedProduct ? "Update" : "Create"}
                   </button>
                 )}

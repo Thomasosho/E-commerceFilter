@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "category": "Beverages",
+    "name": "Green Tea",
+    "description": "Healthy and refreshing green tea",
+    "price": 2.99,
+    "image": "/greentea.jpeg"
+  },
+  {
+    "id": 2,
+    "category": "Beverages",
+    "name": "Orange Juice",
+    "description": "Freshly squeezed orange juice",
+    "price": 3.49,
+    "image": "/orange-juice.jpg"
+  },
+  {
+    "id": 3,
+    "category": "Snacks",
+    "name": "Potato Chips",
+    "description": "Classic potato chips, perfect for snacking",
+    "price": 1.99,
+    "image": "/potato-chips.jpg"
+  },
+  {
+    "id": 4,
+    "category": "Snacks",
+    "name": "Chocolate Bar",
+    "description": "Delicious milk chocolate bar",
+    "price": 2.49,
+    "image": "/chocolate-bar.jpg"
+  },
+  {
+    "id": 5,
+    "category": "Beverages",
+    "name": "Black Coffee",
+    "description": "Strong and aromatic black coffee",
+    "price": 2.49,
+    "image": "/black-coffee.jpg"
+  },
+  {
+    "id": 6,
+    "category": "Beverages",
+    "name": "Iced Tea",
+    "description": "Refreshing iced tea with lemon",
+    "price": 2.99,
+    "image": "/iced-tea.jpg"
+  },
+  {
+    "id": 7,
+    "category": "Snacks",
+    "name": "Popcorn",
+    "description": "Buttery and crunchy popcorn",
+    "price": 1.79,
+    "image": "/popcorn.jpg"
+  },
+  {
+    "id": 8,
+    "category": "Snacks",
+    "name": "Trail Mix",
+    "description": "A mix of nuts, dried fruits, and chocolate",
+    "price": 3.99,
+    "image": "/trail-mix.jpg"
+  },
+  {
+    "id": 9,
+    "category": "Beverages",
+    "name": "Mango Smoothie",
+    "description": "Tropical mango smoothie with yogurt",
+    "price": 4.29,
+    "image": "/mango-smoothie.jpg"
+  },
+  {
+    "id": 10,
+    "category": "Beverages",
+    "name": "Mineral Water",
+    "description": "Purified and refreshing mineral water",
+    "price": 1.49,
+    "image": "/mineral-water.jpg"
+  },
+  {
+    "id": 11,
+    "category": "Snacks",
+    "name": "Pretzels",
+    "description": "Crunchy pretzels with a hint of salt",
+    "price": 2.29,
+    "image": "/pretzels.jpg"
+  },
+  {
+    "id": 12,
+    "category": "Beverages",
+    "name": "Cappuccino",
+    "description": "Smooth and creamy cappuccino",
+    "price": 3.99,
+    "image": "/cappuccino.jpg"
+  },
+  {
+    "id": 13,
+    "category": "Snacks",
+    "name": "Gummy Bears",
+    "description": "Chewy and fruity gummy bears",
+    "price": 1.99,
+    "image": "/gummy-bears.jpg"
+  },
+  {
+    "id": 14,
+    "category": "Beverages",
+    "name": "Lemonade",
+    "description": "Homemade lemonade with a splash of citrus",
+    "price": 2.79,
+    "image": "/lemonade.jpg"
+  },
+  {
+    "id": 15,
+    "category": "Snacks",
+    "name": "Mixed Nuts",
+    "description": "Assorted mixed nuts for a healthy snack",
+    "price": 4.49,
+    "image": "/mixed-nuts.jpg"
+  },
+  {
+    "id": 16,
+    "category": "Beverages",
+    "name": "Fruit Punch",
+    "description": "Sweet and fruity tropical fruit punch",
+    "price": 3.49,
+    "image": "/fruit-punch.jpg"
+  },
+  {
+    "id": 17,
+    "category": "Snacks",
+    "name": "Cheese Crackers",
+    "description": "Crunchy cheese-flavored crackers",
+    "price": 2.19,
+    "image": "/cheese-crackers.jpg"
+  },
+  {
+    "id": 18,
+    "category": "Beverages",
+    "name": "Smoothie Bowl",
+    "description": "A healthy and delicious smoothie bowl",
+    "price": 5.99,
+    "image": "/smoothie-bowl.jpg"
+  },
+  {
+    "id": 19,
+    "category": "Snacks",
+    "name": "Dark Chocolate",
+    "description": "Rich and decadent dark chocolate",
+    "price": 3.79,
+    "image": "/dark-chocolate.jpg"
+  },
+  {
+    "id": 20,
+    "category": "Beverages",
+    "name": "Mint Lemonade",
+    "description": "Refreshing mint-infused lemonade",
+    "price": 4.29,
+    "image": "/mint-lemonade.jpg"
+  },
+  {
+    "id": 21,
+    "category": "Snacks",
+    "name": "Peanut Butter Cups",
+    "description": "Creamy peanut butter cups",
+    "price": 2.99,
+    "image": "/peanut-butter-cups.jpg"
+  },
+  {
+    "id": 22,
+    "category": "Beverages",
+    "name": "Iced Coffee",
+    "description": "Chilled and satisfying iced coffee",
+    "price": 3.79,
+    "image": "/iced-coffee.jpg"
+  },
+  {
+    "id": 23,
+    "category": "Snacks",
+    "name": "Caramel Popcorn",
+    "description": "Sweet and sticky caramel popcorn",
+    "price": 2.59,
+    "image": "/caramel-popcorn.jpg"
+  },
+  {
+    "id": 24,
+    "category": "Beverages",
+    "name": "Matcha Latte",
+    "description": "Smooth and energizing matcha latte",
+    "price": 4.49,
+    "image": "/matcha-latte.jpg"
+  },
+  {
+    "id": 25,
+    "category": "Snacks",
+    "name": "Rice Crackers",
+    "description": "Crunchy rice crackers with a touch of soy sauce",
+    "price": 2.29,
+    "image": "/rice-crackers.jpg"
+  },
+  {
+    "id": 26,
+    "category": "Beverages",
+    "name": "Berry Smoothie",
+    "description": "Mixed berry smoothie packed with antioxidants",
+    "price": 4.99,
+    "image": "/berry-smoothie.jpg"
+  },
+  {
+    "id": 27,
+    "category": "Snacks",
+    "name": "Chocolate-covered Pretzels",
+    "description": "Salty pretzels coated in rich chocolate",
+    "price": 3.29,
+    "image": "/chocolate-pretzels.jpg"
+  },
+  {
+    "id": 28,
+    "category": "Beverages",
+    "name": "Chai Latte",
+    "description": "Spiced chai latte with a hint of cinnamon",
+    "price": 3.99,
+    "image": "/chai-latte.jpg"
+  },
+  {
+    "id": 29,
+    "category": "Snacks",
+    "name": "Vegetable Chips",
+    "description": "Crispy and flavorful vegetable chips",
+    "price": 2.79,
+    "image": "/vegetable-chips.jpg"
+  },
+  {
+    "id": 30,
+    "category": "Beverages",
+    "name": "Coconut Water",
+    "description": "Pure and hydrating coconut water",
+    "price": 1.99,
+    "image": "/coconut-water.jpg"
+  }
+]
